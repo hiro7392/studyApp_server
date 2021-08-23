@@ -1,0 +1,1 @@
+insert into task_eng(student_id,name,content,created_at,updated_at,deadline,achivement) value(1,"仮定法","例文集Part15~18",now(),now(),now(),20);
