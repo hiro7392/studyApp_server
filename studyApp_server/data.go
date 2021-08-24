@@ -17,6 +17,7 @@ func init() {
 	if err != nil {
 		panic(err.Error())
 	}
+	
 	log.Println("init success!\nConnected to mysql.")
 	defer db.Close()
 }
@@ -129,15 +130,43 @@ func showAll_taskJapa() {
 
 //投稿を一つだけ取り出して返す
 func retrieve(Id int) (task Task , err error) {
-	db, err = sql.Open("mysql", "root@/studyApp")
+	db, err = sql.Open("mysql", "root@/studyApp?parseTime=true")
 	if err != nil {
 		panic(err.Error())
 	}
 	
 	//参考書通りの実装
 	task = Task {}
-	err = db.QueryRow("SELECT id,content,name FROM task_math WHERE id =?", Id).Scan(&task.Id,&task.Content, &task.Name)
+	err = db.QueryRow("SELECT id,content,name FROM tasks WHERE id =?", Id).Scan(&task.Id,&task.Content, &task.Name)
 	
+	if err != nil {
+		log.Println(err)
+	}
+	//fmt.Println("retrive check 3",post.Id,post.Content)
+	return
+}
+func getAllTask(Id int) (task []Task , err error) {
+
+	db, err = sql.Open("mysql", "root@/studyApp?parseTime=true")
+	if err != nil {
+		panic(err.Error())
+	}
+	
+	//参考書通りの実装
+	task = []Task{}
+	//err = db.QueryRow("SELECT id,content,name FROM tasks WHERE student_id =?", Id).Scan(&task.Id,&task.Content, &task.Name)
+	rows,err:=db.Query("select * from tasks where student_id=?",Id)
+	for rows.Next() {
+		var tas Task //構造体Person型の変数personを定義
+		err := rows.Scan(&tas.Id,&tas.StudentId,&tas.Taskclass,&tas.Name,&tas.Content,&tas.Createdat,&tas.Updatedat,&tas.Deadline,&tas.Achivement)
+		task=append(task,tas)
+		if err != nil {
+			panic(err.Error())
+		}
+
+		//fmt.Println(task.Id, task.Content, task.StudentId) //結果　1 yamada 2 suzuki
+	}
+
 	if err != nil {
 		log.Println(err)
 	}
