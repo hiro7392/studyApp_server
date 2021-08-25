@@ -19,7 +19,7 @@ func init() {
 	}
 	
 	log.Println("init success!\nConnected to mysql.")
-	defer db.Close()
+	//defer db.Close()
 }
 
 //引っ張ってきたデータを割り当てるための構造体を用意
@@ -28,17 +28,6 @@ type Person struct {
 	Name string
 }
 
-// func judgeYesNo(purpose string) bool {
-
-// 	var addNewuser string
-// 	fmt.Printf("Do you want to %s ?: (Y/n)", purpose)
-// 	fmt.Scan(&addNewuser)
-// 	if addNewuser == "Y" || addNewuser == "y" {
-// 		return true
-// 	} else {
-// 		return false
-// 	}
-// }
 
 func getUserName() string {
 	var str string
@@ -53,33 +42,11 @@ func getuserId() int {
 	return editUserId
 }
 
-//readして全てのカラムを表示
-func showAll() {
-	//showAll_taskMath()
-	//showAll_taskEng()
-	//showAll_taskJapa()
 
-}
 
 //readして全てのカラムを表示
 
-//投稿を一つだけ取り出して返す
-func retrieve(Id int) (task Task , err error) {
-	db, err = sql.Open("mysql", "root@/studyApp?parseTime=true")
-	if err != nil {
-		panic(err.Error())
-	}
-	
-	//参考書通りの実装
-	task = Task {}
-	err = db.QueryRow("SELECT id,content,name FROM tasks WHERE id =?", Id).Scan(&task.Id,&task.Content, &task.Name)
-	
-	if err != nil {
-		log.Println(err)
-	}
-	//fmt.Println("retrive check 3",post.Id,post.Content)
-	return
-}
+
 func retrieveUser(Id int) (student Student , err error) {
 	db, err = sql.Open("mysql", "root@/studyApp?parseTime=true")
 	if err != nil {
@@ -96,34 +63,7 @@ func retrieveUser(Id int) (student Student , err error) {
 	//fmt.Println("retrive check 3",post.Id,post.Content)
 	return
 }
-func getAllTask(Id int) (task []Task , err error) {
 
-	// db, err = sql.Open("mysql", "root@/studyApp?parseTime=true")
-	// if err != nil {
-	// 	panic(err.Error())
-	// }
-	
-	//参考書通りの実装
-	task = []Task{}
-	//err = db.QueryRow("SELECT id,content,name FROM tasks WHERE student_id =?", Id).Scan(&task.Id,&task.Content, &task.Name)
-	rows,err:=db.Query("select * from tasks where student_id=?",Id)
-	for rows.Next() {
-		var tas Task //構造体Person型の変数personを定義
-		err := rows.Scan(&tas.Id,&tas.StudentId,&tas.Taskclass,&tas.Name,&tas.Content,&tas.Createdat,&tas.Updatedat,&tas.Deadline,&tas.Achivement)
-		task=append(task,tas)
-		if err != nil {
-			panic(err.Error())
-		}
-
-		//fmt.Println(task.Id, task.Content, task.StudentId) //結果　1 yamada 2 suzuki
-	}
-
-	if err != nil {
-		log.Println(err)
-	}
-	//fmt.Println("retrive check 3",post.Id,post.Content)
-	return
-}
 
 // func (task *Task) update() (err error) {
 // 	fmt.Println("update checkPoint 1",task.Id)
