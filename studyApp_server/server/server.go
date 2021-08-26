@@ -23,7 +23,7 @@ func main(){
 	//生徒登録情報修正画面(register_student.html)
 
 	//講師用画面
-	templates["teacher"] = loadTemplate("teacher3")	
+	templates["teacher"] = loadTemplate("teacher")	
 	http.HandleFunc("/teacher", teacher)
 
 	//講師用生徒検索画面
@@ -35,7 +35,7 @@ func main(){
 
 	
 	//講師用　生徒一覧表示
-	templates["show_all_student"] = loadTemplate("show_all_student2")
+	templates["show_all_student"] = loadTemplate("show_all_student")
 	http.HandleFunc("/show_all_student/", handleGetStudentByTeacherId)
 
 	//講師用　教材一覧表示
@@ -43,7 +43,7 @@ func main(){
 	http.HandleFunc("/show_all_textbook/", show_all_textbook)
 
 	//生徒情報　表示
-	templates["teacher_student"]=loadTemplate("teacher_student2")
+	templates["teacher_student"]=loadTemplate("teacher_student")
 	http.HandleFunc("/teacher_student/",handleStudentDetail)
 
 
@@ -51,14 +51,17 @@ func main(){
 	http.HandleFunc("/info_student/", info_student)
 
 	//生徒登録
-	templates["register_student"] = loadTemplate("register2_student")
+	templates["register_student"] = loadTemplate("register_student")
 	http.HandleFunc("/register_student/", regist_student)
 
 	//教材登録
 	templates["register_textbook"] = loadTemplate("register_textbook")
 	http.HandleFunc("/register_textbook/", register_textbook)
 
-
+	//タスク更新
+	
+	//タスク新規登録
+	http.HandleFunc("/create_task/",create_task)
 
     // templates["onestudent"] = loadTemplate("onestudent")
     // templates["onetask"] = loadTemplate("onetask")
@@ -138,7 +141,7 @@ func info_student(w http.ResponseWriter, r *http.Request){
     }
 }
 func loadTemplate(name string) *template.Template {
-    t, err := template.ParseFiles("template/" + name + ".htm.gtpl")
+    t, err := template.ParseFiles("template/" + name + ".html")
     if err != nil {
         log.Fatal("ParseFiles: ", err)
     }
@@ -217,7 +220,7 @@ func show_all_textbook(w http.ResponseWriter,r *http.Request){
 	fmt.Println("show_all_textbook called")
 	
 	
-	//教師id=Id を満たす生徒データが配列で帰ってくる
+	
 	post,err:=getAllTextbook()
 	if err !=nil{
 		return

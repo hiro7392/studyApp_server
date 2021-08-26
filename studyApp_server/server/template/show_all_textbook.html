@@ -12,32 +12,28 @@
   <div class="container">
     <!-- 前のページで入力した条件に合う生徒を表示。 -->
     <!-- 生徒名をクリックして。生徒のページ(teacher_student.html)へ移動。その生徒の情報を次のページで表示したい -->
-    <h2>検索結果</h2>
-    <p>＊ 生徒名をクリックして各生徒の情報を表示することができます</p>
+    <h2 class="textbookstitle">テキスト一覧</h2>
+    
     <table class="type06">
       <colgroup span="5"></colgroup>
       <tr>
-        <th>生徒ID</th>
-        <th>氏名</th>
-        <th>学年</th>
-        <th>担当の講師</th>
-        <th>志望校</th>
-        <th>削除</th> 
+        <th>テキストId</th>
+        <th>科目</th>
+        <th>テキスト名</th>
+        <th>ページ数</th>
+        
       </tr>
-      <tr>
-        {{range $nowdata:=.}}
+      {{range $nowdata:=.}}
         <tr>
             <td>{{$nowdata.Id}}</td>
-            <td><a href="/teacher_student/{{$nowdata.Id}}">{{$nowdata.Name}}</td>
-            <td>{{$nowdata.Grade}}</td>
-            <td>{{$nowdata.NowSchool}}</td>
-            <td>{{$nowdata.WantSchool}}</td>
+            <td>{{$nowdata.Subject_name}}</td>
+            <td>{{$nowdata.Name}}</td>
+            <td>{{$nowdata.Page}}</td>
             <td>
-              <a class="a_button" href="#delete-request">　　</a>
-          </td>
+              <a class="btn" href="#delete-request">削除する</a>
+            </td>
         </tr>
-        {{end}}
-      </tr>
+      {{end}}
       <!-- example -->
     </table>
   </div>

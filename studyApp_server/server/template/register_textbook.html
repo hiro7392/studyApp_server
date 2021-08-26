@@ -1,7 +1,7 @@
 <head>
   <meta charset="UTF-8">
   <title>講師用画面(生徒情報)</title>
-  <link href="../css/register_style.css" rel="stylesheet">
+  <link href="../client/css/register_style.css" rel="stylesheet">
 </head>
 
 <body>
@@ -9,18 +9,15 @@
 
 <div class="check_field">
   <ul>
-    <li class="contents"> タイトル #title
+    <li class="contents"> タイトル {{.Name}}
     </li>
-    <li class="contents"> 科目 #subject
+    <li class="contents"> 科目 {{.Subject_name}}
     </li>
-    <li class="contents"> ページ数 #pages
-    </li>
-    <li class="contents"> 出版社 #publisher
-    </li>
+    <li class="contents"> ページ数 {{.Page}}
   </ul>
 </div>
 
 
-<a class="a_button" href="teacher.html">登録</a>
+<a class="a_button" href="../teacher">登録</a>
 <a class="a_button" href="register_textbook2.html">修正</a>
 </body>

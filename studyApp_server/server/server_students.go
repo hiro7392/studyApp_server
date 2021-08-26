@@ -134,7 +134,7 @@ func handleGetStudentByTeacher(w http.ResponseWriter,r *http.Request){
 //教師Aの担当する生徒を全て取得する
 func handleGetStudentByTeacherId(w http.ResponseWriter,r *http.Request){
 	
-	fmt.Println("GetStudentByTeacherId called")
+	fmt.Println("handleGetStudentByTeacherId called")
 	
 	teacher_name:=r.FormValue("teacher_name")
 

@@ -11,8 +11,6 @@ import (
 )
 
 func handleRequestTask(w http.ResponseWriter, r *http.Request){
-	//w.Header().Set("Access-Control-Allow-Origin","http://localhost:3000")
-	//w.Header().Set("Access-Control-Allow-Methods","GET")
 	var err error
 	switch	r.Method{
 		case "GET":
@@ -30,13 +28,59 @@ func handleRequestTask(w http.ResponseWriter, r *http.Request){
 	}
 	
 }
+func calday(month int,day int)(sum int){
+	sum=30*(month-1)+day
+	if sum <=90{
+		sum+=270
+	}else{
+		sum-=90
+	}
+	return sum
+}
 
+func create_task(w http.ResponseWriter, r *http.Request){
+
+	fmt.Println("createTask called")
+	stu_id,err :=strconv.Atoi(path.Base(r.URL.Path))
+	//Formから値を取得
+	name:=r.FormValue("text_title")
+	// subject_class:=r.FormValue("subject")
+	// pages:=r.FormValue("pages")
+	endday:=r.FormValue("endday")
+	fmt.Println("endday",endday)
+	month,err:=strconv.Atoi(endday[5:7])
+	if err != nil {
+		log.Println(err)
+	}
+	fmt.Println(month)
+	day,err:=strconv.Atoi(endday[8:10])
+	if err != nil {
+		log.Println(err)
+	}
+	fmt.Println(day)
+	startday:=calday(8,27)
+	deadline:=calday(month,day)
+	//fmt.Println("deadline",deadline,"startday",startday)
+	var subject_class int
+	var pages int
+	var text_id int
+	err = db.QueryRow("SELECT id,page,subject_id FROM textbooks WHERE name=?", name).Scan(&text_id,&pages,&subject_class)
+	if err != nil {
+		log.Println(err)
+	}
+
+	_,err=db.Query("INSERT INTO tasks(student_id,task_class,textbook_id,startday,deadline,nowpage,allpage) values(?,?,?,?,?,?,?)",stu_id,subject_class,text_id,startday,deadline,0,pages)
+	if err != nil {
+		log.Println(err)
+	}
+	fmt.Println("create task successful!")
+	//fmt.Println("name",name,"subject",subject_class,"page",pages,"endday",endday,"text_id",text_id,"stu_id",stu_id)
+	http.Redirect(w, r, "../teacher_student/"+strconv.Itoa(stu_id), 301)
+	//_,err:=db.Query("INSERT INTO tasks(student_id,task_class,textbook_id,startday,deadline,nowpage,allpage) values(?,?,?,?,?,?,?)",stu_id,subject_class,text_id,
+}
 
 func handleGetTask(w http.ResponseWriter,r *http.Request)(err error){
 	
-	//w.Header().Set("Access-Control-Allow-Origin","http://localhost:3000")
-	//w.Header().Set("Access-Control-Allow-Methods","GET")
-
 	fmt.Println("called handle getTask")
 	id,err	:=strconv.Atoi(path.Base(r.URL.Path))
 	if err!=nil{
@@ -49,8 +93,6 @@ func handleGetTask(w http.ResponseWriter,r *http.Request)(err error){
 		return
 	}
 	
-	//output,err :=json.MarshalIndent(&post,"","\t\t")
-	//output,err :=json.Marshal(&post)
 	data := struct {
         id int
         

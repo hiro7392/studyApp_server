@@ -14,10 +14,10 @@
     <div class="contents_wrapper">
       <div class="contents">
         <ul>
-          <li>氏名　　 : #name</li>
-          <li>学年　　 : #grade</li>
-          <li>中学校名 : #belong_school</li>
-          <li>志望校　 : #school_choise</li>
+          <li>氏名 : {{.St.Name}}</li>
+          <li>学年 : {{.St.Grade}}</li>
+          <li>中学校名 :{{.St.NowSchool}}</li>
+        <li>志望校 : {{.St.WantSchool}}</li>
         </ul>
       </div>
     </div>
@@ -27,15 +27,53 @@
       <div class="contents">
         今週は
         <div class="contents">
+          {{range $nowdata:=.Tas}}
           <ul>
-            <li>#textbook の #start ~ #end</li>
-            <li>#textbook の #start ~ #end</li>
+            <li>{{$nowdata.TextName}} の {{$nowdata.Nowpage}} ~ {{$nowdata.Allpage}}</li>
           </ul>
+          {{end}}
         </div>
         を進めてください。<span class="subcontents"><a href="info_student.html"> ＊ 進捗入力画面へ移動 </a></span>
       </div>
     </div>
+    <div class="inputProgress">
+    <h2>今週の進捗を更新する</h2>
+    <div class="contents_wrapper">
+        <form action="/register_textbook/" class="contents">
+          <ul>
+            <li> テキスト名 :
+              <input type="text" name="text_title" class="form-control">
+            </li>
+            <li> 科目　　 　:
+              <input type="text" name="subject" class="form-control">
+            </li>
+            <li> ページ数 　:
+              <input type="text" name="pages" class="form-control">
+            </li>
+            <li> 期限　　　 :
+              <input type="date" name="endday" class="form-control">
+            </li>
+          </ul>
+          <input type=submit class="right" value="登録">
+        </form>
+      </div>
+    </div>
 
+    <h2>新規タスクを登録</h2>
+    <div class="contents_wrapper">
+        <form action="/create_task/{{.St.Id}}" class="contents">
+          <ul>
+            <li> テキスト名 :
+              <input type="text" name="text_title" class="form-control">
+            </li>
+            <li> 期限　　　 :
+              <input type="date" name="endday" class="form-control">
+            </li>
+          </ul>
+          <input type=submit class="right" value="登録">
+        </form>
+      </div>
+  </div>
     <h2>学習スケジュール</h2>
     <div class="wrapper">
       <div class="gantt">
@@ -75,24 +113,27 @@
             国語
           </div>
           <ul class="gantt__row-bars">
-            <li style="grid-column: 12/22; background-color: green;">教材[ページ数]</li>
-            <li style="grid-column: 23/48; background-color: green;">教材[ページ数]</li>
+            {{range $taskData:=.Taskbox.TaskJapa}}
+            <li style="grid-column: {{$taskData.Start}}/{{$taskData.End}}; background-color: green;">{{$taskData.Name}}</li>
+            {{end}}
           </ul>
         </div>
         <div class="gantt__row gantt__row">
           <div class="gantt__row-first">
             数学
           </div>
-          <ul class="gantt__row-bars">
-            <li style="grid-column: 1/10; background-color: black;" class="stripes">教材[ページ数]</li>
-          </ul>
+          {{range $taskData:=.Taskbox.TaskMath}}
+        <li style="grid-column: {{$taskData.Start}}/{{$taskData.End}}; background-color: black;">{{$taskData.Name}}</li>
+          {{end}}
         </div>
         <div class="gantt__row">
           <div class="gantt__row-first">
             理科
           </div>
           <ul class="gantt__row-bars">
-              <li style="grid-column: 8/16; background-color: red;"> 教材[ページ数]</li>
+            {{range $taskData:=.Taskbox.TaskSci}}
+              <li style="grid-column: {{$taskData.Start}}/{{$taskData.End}}; background-color: red;">{{$taskData.Name}}</li>
+          {{end}}
           </ul>
         </div>
         <div class="gantt__row gantt__row">
@@ -100,7 +141,9 @@
             社会
           </div>
           <ul class="gantt__row-bars">
-            <li style="grid-column: 4/22; background-color: blue;">教材[ページ数]</li>
+            {{range $taskData:=.Taskbox.TaskSoc}}
+            <li style="grid-column: {{$taskData.Start}}/{{$taskData.End}}; background-color: blue;">{{$taskData.Name}}</li>
+            {{end}}
           </ul>
         </div>
         <div class="gantt__row gantt__row">
@@ -108,10 +151,13 @@
             英語
           </div>
           <ul class="gantt__row-bars">
-            <li style="grid-column: 22/39; background-color: orange;">教材[ページ数]</li>
+            {{range $taskData:=.Taskbox.TaskEng}}
+            <li style="grid-column: {{$taskData.Start}}/{{$taskData.End}}; background-color: orange;">{{$taskData.Name}}</li>
+          {{end}}
           </ul>
         </div>
       </div>
+      
     </div>
   </div>
 
