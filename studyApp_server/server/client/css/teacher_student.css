@@ -93,6 +93,7 @@ h2 {
   padding: 5px;
 }
 
+
 .contents {
   margin-left: 5%;
   margin-right: 5%;
@@ -125,9 +126,13 @@ a {
 
 /* container ================================ */
 .container {
-  width: 80%;
+  width: 90%;
+  /*オリジナル
   min-width: 360px;
   max-width: 720px;
+  */
+  min-width: 480px;
+  max-width: 960px;
   margin: 0 auto;
   margin-top: 40px;
 }
@@ -288,3 +293,4 @@ footer{
   max-width: 1200px;
   min-width: 700px;
 }
+

@@ -243,3 +243,37 @@ func handleStudentDetail(w http.ResponseWriter,r *http.Request){
         log.Printf("failed to execute template: %v", err)
     }
 }
+func handleStudentDetailForStu(w http.ResponseWriter,r *http.Request){
+	id,err :=strconv.Atoi(path.Base(r.URL.Path))
+	if err !=nil{
+		log.Println(err)
+	}
+	stu,err:=getOneStudentById(id)
+	if err !=nil{
+		log.Println(err)
+	}
+	tas,taskBox,err:=getAllTask(id)
+	if err !=nil{
+		log.Println(err)
+	}
+	var student_data Student
+	student_data.Id=stu.Id
+	student_data.Name=stu.Name
+	student_data.NowSchool=stu.NowSchool
+	student_data.WantSchool=stu.WantSchool
+	
+	
+	data:=struct {
+		Tas []Task
+		St Student
+		Taskbox TaskBox
+	}{
+		Tas: tas,
+		St: stu,
+		Taskbox: taskBox,
+	}
+
+	if err := templates["teacher_student_for_stu"].Execute(w, data); err != nil {
+        log.Printf("failed to execute template: %v", err)
+    }
+}

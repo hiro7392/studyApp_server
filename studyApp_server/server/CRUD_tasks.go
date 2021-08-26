@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"strconv"
 )
 
 func (task *Task) updateTask() (err error) {
@@ -77,7 +78,7 @@ func readAllTask(Id int) (task Task , err error) {
 func getAllTask(Id int) (task []Task,taskBox TaskBox, err error) {
 
 	
-	//参考書通りの実装
+	
 	task = []Task{}
 	taskBox= TaskBox{}
 	//err = db.QueryRow("SELECT id,content,name FROM tasks WHERE student_id =?", Id).Scan(&task.Id,&task.Content, &task.Name)
@@ -87,6 +88,10 @@ func getAllTask(Id int) (task []Task,taskBox TaskBox, err error) {
 		err := rows.Scan(&tas.Id,&tas.StudentId,&tas.Taskclass,&tas.Textbook_id,&tas.Startday,&tas.Deadline,&tas.Nowpage,&tas.Allpage)
 		
 		tas.TextName,err=getTextNameFromId(tas.Textbook_id)
+		var endpage int
+		err=db.QueryRow("select page from textbooks where id=?",tas.Textbook_id).Scan(&endpage)
+		//fmt.Println("textbook_id",tas.Textbook_id,"endpage",endpage)
+		tas.Allpage=endpage
 		//ガントチャート用の左端と右端
 		sf:=float64(tas.Startday)
 		sd:=float64(tas.Deadline)
@@ -97,12 +102,32 @@ func getAllTask(Id int) (task []Task,taskBox TaskBox, err error) {
 		gnt.Start	=tas.Startday
 		gnt.End		=tas.Deadline
 		gnt.Name=tas.TextName
+		gnt.Endpage=tas.Allpage
+		//今週やるページ数を求める
+		resPage:=tas.Allpage-tas.Nowpage
+		thisWeek:=resPage/(gnt.End-gnt.Start)
+		tas.EndpageThisweek=tas.Nowpage+thisWeek
+		//タスクのtextbook_idからそのタスクの平均を取得
+		var ave int
+		err= db.QueryRow("SELECT aves FROM aves WHERE text_id =?", tas.Textbook_id).Scan(&ave)
+		
+		var mes string
+		//タスクが平均より進んでいるか否かで表示するメッセージを変更
+		if ave<tas.Nowpage{
+			mes="平均より"+strconv.Itoa(tas.Nowpage-ave)+"進んでいます!　いいペースです。"
+			tas.Good=true
+		}else{
+			mes="平均より"+strconv.Itoa(ave-tas.Nowpage)+"遅れています!　少しペースを上げましょう"
+			tas.Good=false
+		}
+		tas.Message=mes;
+		
 		if tas.Taskclass ==1 {
 			taskBox.TaskJapa=append(taskBox.TaskJapa,gnt)
-			fmt.Println(taskBox.TaskJapa)
+			fmt.Println("taskJapa",taskBox.TaskJapa)
 		}else if tas.Taskclass==2{
 			taskBox.TaskMath=append(taskBox.TaskMath,gnt)
-			fmt.Println(taskBox.TaskMath)
+			fmt.Println("taskMath",taskBox.TaskMath)
 		}else if tas.Taskclass==3{
 			taskBox.TaskEng=append(taskBox.TaskEng,gnt)
 		}else if tas.Taskclass==4{

@@ -15,7 +15,16 @@
   </header>
   <div class="teacher-wrapper">
     <!-- 検索条件に合う生徒を探して、次のページ(search_student.html)で一覧を表示する -->
-    <div class="container">
+    <div class="container"
+    style="background-color: #f5f5f5;
+    font-weight: bold;
+    border-radius: 30px;
+    width: auto;
+    margin:30 auto;
+    padding: 20px;
+    padding-right:30;
+    ">
+      <div class="contents_wrapper">
       <div class="block">
         <h1>生徒検索</h1>
         <form class="form-element-wrapper" action="/search_student">
@@ -37,17 +46,26 @@
         <div class="searcher-detail-item">
         
           
-      <form action="/show_all_student/">
-      <span class="searcher-detail-item-header" >担当講師名 : </span>
-      <input type="text" name="teacher_name" class="form-control" placeholder="担当講師名" autofocus>
-      <input type="submit" value="表示">
-    </form>
-        </div>
+        <form action="/show_all_student/">
+          <span class="searcher-detail-item-header" >担当講師名 : </span>
+          <input type="text" name="teacher_name" class="form-control" placeholder="担当講師名" autofocus>
+          <input type="submit" value="表示">
+        </form>
       </div>
     </div>
+    </div>
+  </div>
 
     <div class="container">
-      <div class="block">
+      <div class="block"
+      style="background-color: #f5f5f5;
+    font-weight: bold;
+    border-radius: 30px;
+    width: auto;
+    margin:30 auto;
+    padding: 20px;
+    padding-right: 50px;
+    ">
         <!-- 入力したデータを次のページで表示して確認する -->
         <h1>生徒登録</h1>
         <form action="/register_student/">
@@ -71,7 +89,16 @@
           <input type=submit class="right" value="登録">
         </form>
       </div>
-      <div class="block">
+      <div class="block"
+      style="background-color: #f5f5f5;
+    font-weight: bold;
+    border-radius: 30px;
+    width: auto;
+    margin:30 auto;
+    padding: 20px;
+    padding-right: 0;
+    margin-left: 50;
+    ">
         <!-- 入力したデータを次のページで表示して確認する -->
       
 
@@ -82,7 +109,14 @@
               <input type="text" name="text_title" class="form-control">
             </li>
             <li> 科目　　 :
-              <input type="text" name="subject" class="form-control">
+              
+              <select name="subject"　class="form-control">
+                <option value="国語">国語</option>
+                <option value="数学">数学</option>
+                <option value="英語">英語</option>
+                <option value="理科">理科</option>
+                <option value="社会">社会</option>
+              </select>
             </li>
             <li> ページ数 :
               <input type="text" name="pages" class="form-control">

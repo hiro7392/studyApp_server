@@ -18,7 +18,11 @@ func main(){
 
 	//テンプレート(gtpl)をロード
     templates["login"] = loadTemplate("login")
-	http.HandleFunc("/login", login)
+	http.HandleFunc("/login/", login)
+
+
+	//ログインから生徒用画面or教師用画面への遷移
+	http.HandleFunc("/auth/", auth)
 
 	//生徒登録情報修正画面(register_student.html)
 
@@ -42,9 +46,13 @@ func main(){
 	templates["show_all_textbook"] = loadTemplate("show_all_textbook")
 	http.HandleFunc("/show_all_textbook/", show_all_textbook)
 
-	//生徒情報　表示
+	//生徒情報　表示(教師用)
 	templates["teacher_student"]=loadTemplate("teacher_student")
 	http.HandleFunc("/teacher_student/",handleStudentDetail)
+
+	//生徒情報　表示(生徒用)
+	templates["teacher_student_for_stu"]=loadTemplate("teacher_student_for_stu")
+	http.HandleFunc("/teacher_student_for_stu/",handleStudentDetailForStu)
 
 
 	templates["info_student"] = loadTemplate("info_student")
@@ -59,7 +67,7 @@ func main(){
 	http.HandleFunc("/register_textbook/", register_textbook)
 
 	//タスク更新
-	
+	http.HandleFunc("/update_task/",update_task)
 	//タスク新規登録
 	http.HandleFunc("/create_task/",create_task)
 
@@ -74,7 +82,6 @@ func main(){
 	http.HandleFunc("/student/",handleRequestStudent)
 	http.HandleFunc("/alltask/",showAll_task)
 	http.HandleFunc("/task/",handleRequestTask)
-	//http.HandleFunc("/sigin", sigin)
 	
 	server.ListenAndServe()
 }
@@ -100,12 +107,10 @@ func login(w http.ResponseWriter, r *http.Request) {
 
     data := struct {
         Title  string
-        Name   string
-        Footer string
+        
     }{
         Title:  "Go template Lesson",
-        Name:   r.FormValue("name"),
-        Footer: "2020 Go template Lesson",
+        
     }
     if err := templates["login"].Execute(w, data); err != nil {
         log.Printf("failed to execute template: %v", err)
@@ -240,6 +245,45 @@ func show_all_textbook(w http.ResponseWriter,r *http.Request){
         log.Printf("failed to execute template: %v", err)
     }
 	
+}
+func auth(w http.ResponseWriter,r *http.Request){
+	
+	role,err:=strconv.Atoi(r.FormValue("role"))
+	fmt.Println("role",role)
+	if err!=nil{
+		log.Println(err)
+	}
+	name:=r.FormValue("username")
+	pass:=r.FormValue("password")
+	var Id int =0
+	var truepass string=""
+	//生徒のとき
+	if role==1{
+		err=db.QueryRow("select id,pass from students where name=?",name).Scan(&Id,&truepass)
+		if err!=nil{
+			log.Println(err)
+		}else if Id==0{
+			http.Redirect(w, r, "../login", 301)
+		}else if truepass==""{
+			http.Redirect(w, r, "../login", 301)
+		}else if pass!=truepass {
+			http.Redirect(w, r, "../login", 301)
+		}
+		http.Redirect(w, r, "../teacher_student_for_stu/"+strconv.Itoa(Id), 301)
+	}else{
+		//教師のとき
+		err:=db.QueryRow("select id,pass from teachers where name=?",name).Scan(&Id,&truepass)
+		if err!=nil{
+			log.Println(err)
+		}else if Id==0{
+			http.Redirect(w, r, "../login", 301)
+		}else if truepass==""{
+			http.Redirect(w, r, "../login", 301)
+		}else if pass!=truepass {
+			http.Redirect(w, r, "../login", 301)
+		}
+		http.Redirect(w, r, "../teacher", 301)
+	}
 }
 
 /*

@@ -79,6 +79,48 @@ func create_task(w http.ResponseWriter, r *http.Request){
 	//_,err:=db.Query("INSERT INTO tasks(student_id,task_class,textbook_id,startday,deadline,nowpage,allpage) values(?,?,?,?,?,?,?)",stu_id,subject_class,text_id,
 }
 
+//タスクの更新
+func update_task(w http.ResponseWriter, r *http.Request){
+	//生徒Idの取得
+	fmt.Println("createTask called")
+	stu_id,err :=strconv.Atoi(path.Base(r.URL.Path))
+	if err != nil {
+		log.Println(err)
+	}
+
+	//新しい現在のページ数
+	nowpage,err:=strconv.Atoi(r.FormValue("pages"))
+	if err != nil {
+		log.Println(err)
+	}
+	name:=r.FormValue("text_title")
+	
+
+	var text_id int
+	err=db.QueryRow("select id from textbooks where name=?",name).Scan(&text_id)
+	if err != nil {
+		log.Println(err)
+	}
+	
+	
+	dbUpdate, err := db.Prepare("UPDATE tasks SET nowpage=? WHERE textbook_id =? && student_id=? ")
+	if err != nil {
+		panic(err.Error())
+	}
+
+	
+
+	//更新を実行
+	_, err = dbUpdate.Exec(nowpage,text_id,stu_id)
+	if err != nil {
+		panic(err.Error())
+	}
+	fmt.Println("update task successful!")
+	http.Redirect(w, r, "../teacher_student/"+strconv.Itoa(stu_id), 301)
+}
+
+
+
 func handleGetTask(w http.ResponseWriter,r *http.Request)(err error){
 	
 	fmt.Println("called handle getTask")

@@ -1,19 +1,6 @@
 package main
 
-//import "time"
 
-
-// type Task struct{
-// 	Id 			int		`json:"id"`
-// 	StudentId 	int		`json:"student_id"`
-// 	Taskclass 	int 	`json:"task_class"`
-// 	Name		string	`json:"name"`
-// 	Content		string	`json:"content"`
-// 	Createdat  time.Time `json:"created_at"`
-// 	Updatedat  time.Time `json:"updated_at"`
-// 	Deadline   time.Time `json:"deadline"`
-// 	Achivement 	int		`json:"achivement"`
-// }
 type Task struct{
 	Id int
 	StudentId int
@@ -24,6 +11,10 @@ type Task struct{
 	Deadline int
 	Nowpage int
 	Allpage int
+	Ave     int
+	Message string
+	Good	bool
+	EndpageThisweek int
 }
 type Student struct{ 
 	Id			int
@@ -51,6 +42,7 @@ type Gnt struct{
 	Name	string
 	Start	int
 	End		int
+	Endpage int
 }
 
 type TaskBox struct{

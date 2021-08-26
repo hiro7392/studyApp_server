@@ -38,8 +38,7 @@
           </ul>
           {{end}}
         </div>
-        を進めてください。<span class="subcontents"><a href="info_student.html"> ＊ 進捗入力画面へ移動 </a></span>
-      </div>
+        を進めてください。</div>
     </div>
     <div class="inputProgress">
     
@@ -130,42 +129,6 @@
         </div>
       </div>
     </div>
-
-    <h2 style="margin-top:30px">今週の進捗を更新する</h2>
-    <div class="contents_wrapper">
-        <form action="/update_task/{{.St.Id}}" class="contents">
-          <ul>
-            <li style="height:30px"> テキスト 　:
-            <select name="example">
-            {{range $nowdata:=.Tas}}
-              <option value="text_title">{{$nowdata.TextName}}</option>
-            {{end}}
-          </select>
-          </li>
-            <li style="height:30px"> ページ数 　:
-              <input type="text" name="pages" class="form-control">
-            </li>
-          </ul>
-          <input type=submit class="right" value="登録">
-        </form>
-      </div>
-    </div>
-
-    <h2>スケジュールを登録</h2>
-      <div class="contents_wrapper">
-        <form action="/create_task/{{.St.Id}}" class="contents">
-          <ul>
-            <li> テキスト名 :
-              <input type="text" name="text_title" class="form-control">
-            </li>
-            <li> 期限　　　 :
-              <input type="date" name="endday" class="form-control">
-            </li>
-          </ul>
-          <input type=submit class="submit_btn" class="right" value="登録">
-        </form>
-      </div>
-
   </div>
 
   <footer></footer>
