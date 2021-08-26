@@ -13,7 +13,7 @@ var db *sql.DB
 func init() {
 	var err error
 	//mysqlへ接続。ドライバ名（mysql）と、ユーザー名・データソース(ここではgosample)を指定。
-	db, err = sql.Open("mysql", "root@/studyApp?parseTime=true")
+	db, err = sql.Open("mysql", "root@/product_studyApp?parseTime=true")
 	if err != nil {
 		panic(err.Error())
 	}
@@ -48,7 +48,7 @@ func getuserId() int {
 
 
 func retrieveUser(Id int) (student Student , err error) {
-	db, err = sql.Open("mysql", "root@/studyApp?parseTime=true")
+	db, err = sql.Open("mysql", "root@/product_studyApp?parseTime=true")
 	if err != nil {
 		panic(err.Error())
 	}

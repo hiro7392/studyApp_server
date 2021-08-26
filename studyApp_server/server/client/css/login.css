@@ -1,0 +1,113 @@
+body,
+html {
+  font-family: "Roboto", sans-serif;
+  background-color: #cddade;
+  height: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.brank_head{
+  height:90px;
+}
+
+.login_field{
+  margin:0 auto;
+  width:480px;
+}
+
+.fa-comments-o{
+  font-size: 50px
+}
+
+.form-sginin-cener{
+  align-items: center;
+}
+
+.input_field{
+  margin-left:20;
+  width:240px auto;
+}
+
+.button_field{
+  margin-top:10;
+  margin-left:140;
+}
+
+.a_button {
+  display: inline-block;
+  border-style: solid;
+  color: black;
+  background-color: rgb(225, 224, 224);
+  border-width:1px;
+  border-color: darkgray;
+  text-decoration: none;
+}
+
+/* reset ================================ */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 100%;
+  font-family: 'Hiragino Sans', sans-serif;
+  line-height: 1.7;
+  letter-spacing: 1px;
+}
+
+body {
+  margin: 0;
+  background-color: #cddade;
+  color: #6c7686;
+}
+
+ul, li {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  display: block;
+  text-decoration: none;
+  color: #2d3133;
+  font-size: 14px;
+}
+
+a:hover {
+  transition: all 0.3s ease;
+}
+
+
+h1, h2, h3, h4, h5, h6, p {
+  margin: 0;
+}
+
+h1 {
+  font-weight: 600;
+}
+h2 {
+  font-weight: 600;
+  font-size: 40;
+}
+
+/* header ================================ */
+header {
+  height: 56px;
+  background-color: #BBBBBB;
+  border-bottom: 1px solid #f0f4f9;
+}
+
+.header-logo {
+  margin-left: 56px;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 56px;
+  color: #6c7686;
+  display: inline;
+}
+
+.header-logo:hover {
+  color: #58d2b2;
+}

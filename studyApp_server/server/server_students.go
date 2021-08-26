@@ -1,7 +1,7 @@
 package main
 
 import (
-	"encoding/json"
+	//"encoding/json"
 	"fmt"
 	"net/http"
 	"path"
@@ -10,10 +10,7 @@ import (
 )
 
 func handleRequestStudent(w http.ResponseWriter, r *http.Request){
-	//w.Header().Set("Access-Control-Allow-Origin","http:")
-	//w.Header().Set("Access-Control-Allow-Methods","POST")
-	//w.Header().Set("Access-Control-Allow-Credentials",true)
-
+	
 	var err error
 	switch	r.Method{
 		case "GET":
@@ -70,21 +67,101 @@ func handleGetStudent(w http.ResponseWriter,r *http.Request)(err error){
 	}
 	fmt.Println("chechpoint2 id=",id)
 
-	post,err:=getOneStudent(id)
+	post,err:=getOneStudentById(id)
 	if err !=nil{
 		return
 	}
 	fmt.Println("chechpoint3\n")
-	//output,err :=json.MarshalIndent(&post,"","\t\t")
-	output,err :=json.Marshal(&post)
 
+	//output,err :=json.MarshalIndent(&post,"","\t\t")
+	//output,err :=json.Marshal(&post)
+
+	data :=struct{
+		Name string
+		Password string
+	}{
+        Name:   post.Name,
+        Password: post.Password,
+    }
+	if err := templates["onestudent"].Execute(w, data); err != nil {
+        log.Printf("failed to execute template: %v", err)
+		//return
+    }
+	// if err !=nil{
+	// 	return
+	// }
+	//w.Header().Set("Content-Type","application/json")
+	//w.Write(output)
+
+
+	return
+}
+
+func handleGetStudentByTeacher(w http.ResponseWriter,r *http.Request){
+	
+	fmt.Println("handleGetStudentByTeachert called")
+	student_name:=r.FormValue("student_name")
+	fmt.Println("chechpoint2 id=",student_name)
+
+	post,err:=getOneStudentByName(student_name)
 	if err !=nil{
 		return
 	}
-	w.Header().Set("Content-Type","application/json")
-	w.Write(output)
-	//showAll()
-	return
+	teacher_name,err:=getOneTeacherNameById(post.Teacher_id)
+	data :=struct{
+		Id			int
+		Name 		string 
+		Password 	string 
+		NowSchool 	string
+		WantSchool	string
+		Grade 		int
+		Teacher_name string
+	}{
+		Id	:	post.Id,
+        Name:   post.Name,
+        Password: post.Password,
+		NowSchool: post.NowSchool,
+		WantSchool: post.WantSchool,
+		Grade:post.Grade,
+		Teacher_name:teacher_name,
+    }
+	if err := templates["search_student"].Execute(w, data); err != nil {
+        log.Printf("failed to execute template: %v", err)
+    }
+	
+}
+
+//教師Aの担当する生徒を全て取得する
+func handleGetStudentByTeacherId(w http.ResponseWriter,r *http.Request){
+	
+	fmt.Println("GetStudentByTeacherId called")
+	
+	teacher_name:=r.FormValue("teacher_name")
+
+	Id,err:=getOneTeacherByName(teacher_name)
+
+	//教師id=Id を満たす生徒データが配列で帰ってくる
+	post,err:=getStudentsByTeacherId(Id)
+	if err !=nil{
+		return
+	}
+	data:=[]Student{}
+
+	for _,v:=range post{
+		var stu Student
+		stu.Id=v.Id
+		stu.Name=v.Name
+		stu.Password=v.Password
+		stu.NowSchool=v.NowSchool
+		stu.WantSchool=v.WantSchool
+		stu.Grade=v.Grade
+		data=append(data,stu)
+	}
+
+	if err := templates["show_all_student"].Execute(w, data); err != nil {
+        log.Printf("failed to execute template: %v", err)
+    }
+	
 }
 func handlePutStudent(w http.ResponseWriter,r *http.Request)(err error){
 	// id,err:=strconv.Atoi(path.Base(r.URL.Path))
@@ -130,4 +207,39 @@ func handleDeleteStudent(w http.ResponseWriter,r *http.Request)(err error){
 	w.WriteHeader(200)
 	
 	return
+}
+
+func handleStudentDetail(w http.ResponseWriter,r *http.Request){
+	id,err :=strconv.Atoi(path.Base(r.URL.Path))
+	if err !=nil{
+		log.Println(err)
+	}
+	stu,err:=getOneStudentById(id)
+	if err !=nil{
+		log.Println(err)
+	}
+	tas,taskBox,err:=getAllTask(id)
+	if err !=nil{
+		log.Println(err)
+	}
+	var student_data Student
+	student_data.Id=stu.Id
+	student_data.Name=stu.Name
+	student_data.NowSchool=stu.NowSchool
+	student_data.WantSchool=stu.WantSchool
+	
+	
+	data:=struct {
+		Tas []Task
+		St Student
+		Taskbox TaskBox
+	}{
+		Tas: tas,
+		St: stu,
+		Taskbox: taskBox,
+	}
+
+	if err := templates["teacher_student"].Execute(w, data); err != nil {
+        log.Printf("failed to execute template: %v", err)
+    }
 }

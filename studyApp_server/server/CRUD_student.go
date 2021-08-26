@@ -17,7 +17,7 @@ func (task *Task) updateStudent() (err error) {
 	fmt.Println("update checkPoint 2",task.Id)
 
 	//更新を実行
-	_, err = dbUpdate.Exec(task.Content, task.Name,task.Id)
+	//_, err = dbUpdate.Exec(task.Content, task.Name,task.Id)
 	return
 }
 
@@ -55,19 +55,54 @@ func (student *Student) createStudent() (err error) {
 	fmt.Println("create check point 3",t.Format(layout2))
 	return
 }
-func getOneStudent(Id int) (student Student , err error) {
-	//db, err = sql.Open("mysql", "root@/studyApp?parseTime=true")
-	
+func getOneStudentByName(Name string) (student Student , err error) {
 	
 	
 	//参考書通りの実装
 	student = Student {}
 	//var tmp_id int
-	err = db.QueryRow("SELECT name,pass FROM students WHERE id =?", Id).Scan(&student.Name,&student.Password)
+	//err = db.QueryRow("SELECT id,name,pass,grade,nowSchool,wantSchool FROM students WHERE name =?", Name).Scan(&student.Id,&student.Name,&student.Password,&student.Grade,&student.NowSchool,&student.WantSchool)
+	err = db.QueryRow("SELECT id,teacher_id,name,pass,grade,nowSchool,wantSchool FROM students WHERE name=?", Name).Scan(&student.Id,&student.Teacher_id,&student.Name,&student.Password,&student.Grade,&student.NowSchool,&student.WantSchool)
+
 	if err != nil {
 		log.Println(err)
 	}
 	//fmt.Println("retrive check 3",post.Id,post.Content)
 	return
 }
+
+func getOneStudentById(Id int) (student Student , err error) {
+	
+	
+	//参考書通りの実装
+	student = Student {}
+	//var tmp_id int
+	err = db.QueryRow("SELECT id,teacher_id,name,pass,grade,nowSchool,wantSchool FROM students WHERE id=?", Id).Scan(&student.Id,&student.Teacher_id,&student.Name,&student.Password,&student.Grade,&student.NowSchool,&student.WantSchool)
+	if err != nil {
+		log.Println(err)
+	}
+	//fmt.Println("retrive check 3",post.Id,post.Content)
+	return
+}
+//教師id=Id を満たす生徒データが配列で帰ってくる
+func getStudentsByTeacherId(Id int) (student []Student , err error){
+	student= []Student{}
+
+	rows,err:=db.Query("select * from students where teacher_id=?",Id)
+	for rows.Next() {
+		var stu Student //構造体Person型の変数personを定義
+		var teacher_id int
+		err := rows.Scan(&stu.Id,&stu.Name,&stu.Password,&stu.Grade,&teacher_id,&stu.NowSchool,&stu.WantSchool)
+		student=append(student,stu)
+		if err != nil {
+			panic(err.Error())
+		}
+	}
+
+	if err != nil {
+		log.Println(err)
+	}
+	return
+}
+
 
