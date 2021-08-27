@@ -103,6 +103,7 @@ func update_task(w http.ResponseWriter, r *http.Request){
 	}
 	
 	
+	fmt.Println("name",name, "nowpage",nowpage,"text_id",text_id,"stu_id",stu_id)
 	dbUpdate, err := db.Prepare("UPDATE tasks SET nowpage=? WHERE textbook_id =? && student_id=? ")
 	if err != nil {
 		panic(err.Error())
@@ -115,7 +116,7 @@ func update_task(w http.ResponseWriter, r *http.Request){
 	if err != nil {
 		panic(err.Error())
 	}
-	fmt.Println("update task successful!")
+	fmt.Println("update task successful!",)
 	http.Redirect(w, r, "../teacher_student/"+strconv.Itoa(stu_id), 301)
 }
 

@@ -6,7 +6,7 @@
 
 <body>
   <header>
-    <a class="header-logo" href="/teacher">アプリ名</a>
+    <a class="header-logo" href="/teacher">Lead</a>
   </header>
 
   <div class="container">
@@ -38,7 +38,7 @@
           </ul>
           {{end}}
         </div>
-        を進めてください。<span class="subcontents"><a href="info_student.html"> ＊ 進捗入力画面へ移動 </a></span>
+        を進めてください。<span class="subcontents"><a href="#update"> ＊ 進捗入力画面へ移動 </a></span>
       </div>
     </div>
     <div class="inputProgress">
@@ -130,15 +130,15 @@
         </div>
       </div>
     </div>
-
+    <a name="update"></a>
     <h2 style="margin-top:30px">今週の進捗を更新する</h2>
     <div class="contents_wrapper">
         <form action="/update_task/{{.St.Id}}" class="contents">
           <ul>
             <li style="height:30px"> テキスト 　:
-            <select name="example">
+            <select name="text_title">
             {{range $nowdata:=.Tas}}
-              <option value="text_title">{{$nowdata.TextName}}</option>
+              <option value={{$nowdata.TextName}}>{{$nowdata.TextName}}</option>
             {{end}}
           </select>
           </li>

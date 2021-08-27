@@ -114,10 +114,10 @@ func getAllTask(Id int) (task []Task,taskBox TaskBox, err error) {
 		var mes string
 		//タスクが平均より進んでいるか否かで表示するメッセージを変更
 		if ave<tas.Nowpage{
-			mes="平均より"+strconv.Itoa(tas.Nowpage-ave)+"進んでいます!　いいペースです。"
+			mes="平均より "+strconv.Itoa(tas.Nowpage-ave)+" p進んでいます!　いいペースです。"
 			tas.Good=true
 		}else{
-			mes="平均より"+strconv.Itoa(ave-tas.Nowpage)+"遅れています!　少しペースを上げましょう"
+			mes="平均より "+strconv.Itoa(ave-tas.Nowpage)+" p遅れています!　少しペースを上げましょう"
 			tas.Good=false
 		}
 		tas.Message=mes;
