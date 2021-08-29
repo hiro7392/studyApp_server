@@ -17,6 +17,7 @@ func init() {
 	if err != nil {
 		panic(err.Error())
 	}
+	defer db.Close()
 	
 	log.Println("init success!\nConnected to mysql.")
 	//defer db.Close()

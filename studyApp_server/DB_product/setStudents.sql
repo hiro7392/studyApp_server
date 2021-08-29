@@ -1,0 +1,13 @@
+CREATE TABLE students(
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+
+    name VARCHAR(100) NOT NULL,
+    pass VARCHAR(100) NOT NULL,
+    grade INT UNSIGNED NOT NULL,
+    teacher_id INT UNSIGNED NOT NULL,
+    nowSchool VARCHAR(100) NOT NULL,
+    wantSchool VARCHAR(100) NOT NULL,
+    PRIMARY KEY(id)
+);
+
+
