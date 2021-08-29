@@ -14,9 +14,10 @@ CREATE TABLE students(
 );
 
 
-CREATE TABLE task_math(
+CREATE TABLE tasks(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     student_id INT UNSIGNED NOT NULL,
+    task_class INT UNSIGNED NOT NULL,
     name VARCHAR(100) NOT NULL,
     content VARCHAR(100) NOT NULL,
     created_at DATETIME NOT NULL,
@@ -26,30 +27,9 @@ CREATE TABLE task_math(
     FOREIGN KEY (student_id) REFERENCES students(id),
     PRIMARY KEY (id)
 );
-CREATE TABLE task_japa(
+CREATE TABLE subjects(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    student_id INT UNSIGNED NOT NULL,
     name VARCHAR(100) NOT NULL,
-    content VARCHAR(100) NOT NULL,
-    created_at DATETIME NOT NULL,
-    updated_at DATETIME NOT NULL,
-    deadline DATETIME NOT NULL,
-    achivement INT UNSIGNED NOT NULL,
-    FOREIGN KEY (student_id) REFERENCES students(id),
     PRIMARY KEY (id)
 );
 
-CREATE TABLE task_eng(
-    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    student_id INT UNSIGNED NOT NULL,
-    name VARCHAR(100) NOT NULL,
-    content VARCHAR(100) NOT NULL,
-    created_at DATETIME NOT NULL,
-    updated_at DATETIME NOT NULL,
-    deadline DATETIME NOT NULL,
-    achivement INT UNSIGNED NOT NULL,
-    FOREIGN KEY (student_id) REFERENCES students(id),
-    PRIMARY KEY (id)
-);
-
-insert into students(id,name,,created_at,updated_at) 

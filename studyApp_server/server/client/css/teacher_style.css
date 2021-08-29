@@ -1,0 +1,119 @@
+/* reset ================================ */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 100%;
+  font-family: 'Hiragino Sans', sans-serif;
+  line-height: 1.7;
+  letter-spacing: 1px;
+}
+
+body {
+  margin: 0;
+  background-color: #cddade;
+  color: #6c7686;
+}
+
+ul, li {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  display: block;
+  text-decoration: none;
+  color: #2d3133;
+  font-size: 14px;
+}
+
+a:hover {
+  transition: all 0.3s ease;
+}
+
+
+h1, h2, h3, h4, h5, h6, p {
+  margin: 0;
+}
+
+h1 {
+  font-weight: 600;
+}
+
+/* header ================================ */
+header {
+  height: 56px;
+  background-color: #BBBBBB;
+  border-bottom: 1px solid #f0f4f9;
+}
+
+.header-logo {
+  margin-left: 56px;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 56px;
+  color: #6c7686;
+  display: inline;
+}
+
+.header-logo:hover {
+  color: #58d2b2;
+}
+
+/* button ============================== */
+.a_button {
+  display: inline-block;
+  border-style: solid;
+  color: black;
+  background-color: rgb(225, 224, 224);
+  border-width:1px;
+  border-color: darkgray;
+  text-decoration: none;
+}
+
+.right {
+  margin-top: 6px;
+  margin-left: 57.5%;
+}
+
+/* container ================================ */
+.container {
+  width: 80%;
+  min-width: 360px;
+  max-width: 720px;
+  margin: 0 auto;
+  margin-top: 40px;
+  display: flex;
+}
+
+/* block ================================ */
+.block {
+  width: 80%;
+  min-width: 360px;
+  max-width: 720px;
+}
+
+/* teacher ================================ */
+.teacher-wrapper {
+  max-width: 1200px;
+  min-width: 920px;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-element-wrapper {
+  margin-bottom: 10px;
+}
+
+.searcher-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.searcher-detail-header h2 {
+  font-size: 18px;
+}

@@ -1,0 +1,36 @@
+body,
+html {
+  font-family: "Roboto", sans-serif;
+  background-color: #cddade;
+  height: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.recode_field{
+  width:400px;
+  background-color: #0a3444 !important;
+  border-radius: 30px;
+}
+
+.contents{
+  color:#FFF; /*文字の色指定*/
+  font-weight: bold;
+  font-size:25px
+}
+
+.title{
+  font-size:30px;
+  font-weight:bold;
+  margin-top:10px;
+}
+
+.a_button {
+  display: inline-block;
+  border-style: solid;
+  color: black;
+  background-color: rgb(225, 224, 224);
+  border-width:1px;
+  border-color: darkgray;
+  text-decoration: none;
+}

@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"path"
 	"strconv"
+	"time"
 )
 
 type Post struct{
@@ -17,9 +18,14 @@ type Post struct{
 type Task struct{
 	Id 			int		`json:"id"`
 	StudentId 	int		`json:"student_id"`
-	Content		string	`json:"content"`
+	Taskclass 	int 	`json:"task_class"`
 	Name		string	`json:"name"`
+	Content		string	`json:"content"`
+	Createdat  time.Time `json:"created_at"`
+	Updatedat  time.Time `json:"updated_at"`
+	Deadline   time.Time `json:"deadline"`
 	Achivement 	int		`json:"achivement"`
+
 }
 
 func main(){
@@ -28,10 +34,42 @@ func main(){
 	}
 	
 	http.HandleFunc("/post/",handleRequest)
+	http.HandleFunc("/student/",showAll_task)
 	server.ListenAndServe()
 }
+
+//全てのタスクを表示
+func showAll_task(w http.ResponseWriter, r *http.Request){
+	w.Header().Set("Access-Control-Allow-Origin","http://localhost:3000")
+	w.Header().Set("Access-Control-Allow-Methods","GET")
+	fmt.Println("chechpoint1")
+	id,err	:=strconv.Atoi(path.Base(r.URL.Path))
+	if err!=nil{
+		return
+	}
+	//fmt.Println("chechpoint2 id=",id)
+
+	post,err:=getAllTask(id)
+	if err !=nil{
+		return
+	}
+	fmt.Println("chechpoint3\n")
+	//output,err :=json.MarshalIndent(&post,"","\t\t")
+	output,err :=json.Marshal(&post)
+
+	if err !=nil{
+		return
+	}
+	w.Header().Set("Content-Type","application/json")
+	w.Write(output)
+	//showAll()
+	return
+}
+
 //リクエストを正しい関数に振り分けるためのハンドル関数
 func handleRequest(w http.ResponseWriter, r *http.Request){
+	w.Header().Set("Access-Control-Allow-Origin","http://localhost:3000")
+	w.Header().Set("Access-Control-Allow-Methods","GET")
 	var err error
 	switch	r.Method{
 		case "GET":
@@ -51,19 +89,25 @@ func handleRequest(w http.ResponseWriter, r *http.Request){
 }
 
 func handleGet(w http.ResponseWriter,r *http.Request)(err error){
+	
+	w.Header().Set("Access-Control-Allow-Origin","http://localhost:3000")
+	w.Header().Set("Access-Control-Allow-Methods","GET")
 
 	fmt.Println("chechpoint1")
 	id,err	:=strconv.Atoi(path.Base(r.URL.Path))
 	if err!=nil{
 		return
 	}
-	//fmt.Println("chechpoint2 id=",id)
+	fmt.Println("chechpoint2 id=",id)
+
 	post,err:=retrieve(id)
 	if err !=nil{
 		return
 	}
-	//fmt.Println("chechpoint3\n")
-	output,err :=json.MarshalIndent(&post,"","\t\t")
+	fmt.Println("chechpoint3\n")
+	//output,err :=json.MarshalIndent(&post,"","\t\t")
+	output,err :=json.Marshal(&post)
+
 	if err !=nil{
 		return
 	}

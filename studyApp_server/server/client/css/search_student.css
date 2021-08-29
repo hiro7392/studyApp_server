@@ -1,0 +1,129 @@
+/* reset ================================ */
+* {
+    box-sizing: border-box;
+  }
+  
+  html {
+    font-size: 100%;
+    font-family: 'Hiragino Sans', sans-serif;
+    line-height: 1.7;
+    letter-spacing: 1px;
+  }
+  
+  body {
+    margin: 0;
+    background-color: #cddade;
+    color: #6c7686;
+  }
+  
+  ul, li {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  a {
+    display: block;
+    text-decoration: none;
+    color: #2d3133;
+    font-size: 14px;
+  }
+  
+  a:hover {
+    transition: all 0.3s ease;
+  }
+  
+  
+  h1, h2, h3, h4, h5, h6, p {
+    margin: 0;
+  }
+  
+  h1 {
+    font-weight: 600;
+  }
+  
+  /* header ================================ */
+  header {
+    height: 56px;
+    background-color: #BBBBBB;
+    border-bottom: 1px solid #f0f4f9;
+  }
+  
+  .header-logo {
+    margin-left: 56px;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 56px;
+    color: #6c7686;
+    display: inline;
+  }
+  
+  .header-logo:hover {
+    color: #58d2b2;
+  }
+  
+  /* body ================================ */
+  body,
+  html {
+    font-family: "Roboto", sans-serif;
+    background-color: #cddade;
+    height: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* table,th,td{ */
+  /*   border: 1px solid; */
+  /* } */
+  /*  */
+  /* td{ */
+  /*   text-align: right; */
+  /* } */
+  
+  table, th, td {
+    border-collapse: collapse;
+    border: 1px solid #ccc;
+    line-height: 1.5;
+  }
+  
+  table.type06 th {
+    width: 150px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    background: #3f3f3f;
+    color: #ffffff;
+  }
+  table.type06 td {
+    width: 350px;
+    padding: 10px;
+    vertical-align: top;
+    background: #f5f5f5;
+  }
+  
+  .a_button {
+    display: inline-block;
+    border-style: solid;
+    color: black;
+    background-color: rgb(225, 224, 224);
+    border-width:1px;
+    border-color: darkgray;
+    text-decoration: none;
+    margin-left:20px
+  }
+  
+  a {
+    color: #008080;
+  }
+  
+  /* container ================================ */
+  .container {
+    width: 80%;
+    min-width: 360px;
+    max-width: 860px;
+    margin: 0 auto;
+    margin-top: 40px;
+  }
+  .textbookstitle{
+    padding-bottom: 5%;
+  }
