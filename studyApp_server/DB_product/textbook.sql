@@ -1,0 +1,7 @@
+CREATE TABLE textbooks(
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    subject_id INT UNSIGNED NOT NULL,
+    page    INT UNSIGNED NOT NULL,
+    PRIMARY KEY(id)
+)
