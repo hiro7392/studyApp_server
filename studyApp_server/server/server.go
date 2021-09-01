@@ -19,7 +19,7 @@ func main(){
 	//テンプレート(gtpl)をロード
     templates["login"] = loadTemplate("login")
 	http.HandleFunc("/login/", login)
-
+	http.HandleFunc("/",first)
 
 	//ログインから生徒用画面or教師用画面への遷移
 	http.HandleFunc("/auth/", auth)
@@ -84,6 +84,7 @@ func main(){
 	http.HandleFunc("/task/",handleRequestTask)
 	
 	server.ListenAndServe()
+	
 }
 
 var templates = make(map[string]*template.Template)
@@ -103,6 +104,9 @@ func index(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func first(w http.ResponseWriter, r *http.Request){
+	http.Redirect(w, r, "../login", 301)
+}
 func login(w http.ResponseWriter, r *http.Request) {
 
     data := struct {
@@ -285,10 +289,3 @@ func auth(w http.ResponseWriter,r *http.Request){
 		http.Redirect(w, r, "../teacher", 301)
 	}
 }
-
-/*
-{{range $taskData:=.taskBox.taskJapa}}
-        <li style="grid-column: {{$taskData.start}}/{{$taskData.end}}; background-color: green;">{{$taskData.Name}}</li>
-{{end}}
-
-*/
