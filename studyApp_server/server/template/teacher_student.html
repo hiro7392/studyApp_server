@@ -156,7 +156,14 @@
         <form action="/create_task/{{.St.Id}}" class="contents">
           <ul>
             <li> テキスト名 :
-              <input type="text" name="text_title" class="form-control">
+              <select name="text_title">
+                {{range $nowdata:=.Tas}}
+                  <option value={{$nowdata.TextName}}>{{$nowdata.TextName}}</option>
+                {{end}}
+              </select>
+              <!--
+                              <input type="text" name="text_title" class="form-control">
+              -->
             </li>
             <li> 期限　　　 :
               <input type="date" name="endday" class="form-control">
