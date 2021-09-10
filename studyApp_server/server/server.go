@@ -19,7 +19,7 @@ func main(){
 	//テンプレート(gtpl)をロード
     templates["login"] = loadTemplate("login")
 	http.HandleFunc("/login/", login)
-
+	http.HandleFunc("/",first)
 
 	//ログインから生徒用画面or教師用画面への遷移
 	http.HandleFunc("/auth/", auth)
@@ -84,6 +84,7 @@ func main(){
 	http.HandleFunc("/task/",handleRequestTask)
 	
 	server.ListenAndServe()
+	
 }
 
 var templates = make(map[string]*template.Template)
@@ -103,6 +104,10 @@ func index(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func first(w http.ResponseWriter, r *http.Request){
+	fmt.Printf("first called\n")
+	http.Redirect(w, r, "/login", 301)
+}
 func login(w http.ResponseWriter, r *http.Request) {
 
     data := struct {
@@ -247,19 +252,22 @@ func show_all_textbook(w http.ResponseWriter,r *http.Request){
 	
 }
 func auth(w http.ResponseWriter,r *http.Request){
-	
+	println("auth called")
 	role,err:=strconv.Atoi(r.FormValue("role"))
-	fmt.Println("role",role)
+	
 	if err!=nil{
 		log.Println(err)
 	}
 	name:=r.FormValue("username")
 	pass:=r.FormValue("password")
+	fmt.Println("role",role,"name",name)
 	var Id int =0
 	var truepass string=""
 	//生徒のとき
 	if role==1{
 		err=db.QueryRow("select id,pass from students where name=?",name).Scan(&Id,&truepass)
+		fmt.Println("role:生徒 id=",Id,"name=",name)
+
 		if err!=nil{
 			log.Println(err)
 		}else if Id==0{
@@ -285,10 +293,3 @@ func auth(w http.ResponseWriter,r *http.Request){
 		http.Redirect(w, r, "../teacher", 301)
 	}
 }
-
-/*
-{{range $taskData:=.taskBox.taskJapa}}
-        <li style="grid-column: {{$taskData.start}}/{{$taskData.end}}; background-color: green;">{{$taskData.Name}}</li>
-{{end}}
-
-*/
