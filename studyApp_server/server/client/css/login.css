@@ -58,8 +58,8 @@ html {
 
 body {
   margin: 0;
-  background-color: #cddade;
-  color: #6c7686;
+  
+  color:black;
 }
 
 ul, li {
@@ -74,6 +74,7 @@ a {
   color: #2d3133;
   font-size: 14px;
 }
+
 
 a:hover {
   transition: all 0.3s ease;
@@ -95,7 +96,7 @@ h2 {
 /* header ================================ */
 header {
   height: 56px;
-  background-color: #BBBBBB;
+  background-color: #ece9e9;
   border-bottom: 1px solid #f0f4f9;
 }
 
@@ -109,5 +110,18 @@ header {
 }
 
 .header-logo:hover {
-  color: #58d2b2;
+  color: #7958d2;
+}
+/* body ================================ */
+
+#loginform_{
+  visibility:visible;
+  padding:5%;
+  background-color: rgb(122, 197, 61);
+  border-radius: 5%;
+}
+#hideform_{
+  text-align: center;
+  visibility:hidden;
+  margin-top:15%;
 }
