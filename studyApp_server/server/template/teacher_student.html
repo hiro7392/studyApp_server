@@ -5,12 +5,13 @@
 </head>
 
 <body>
-  <header>
-    <a class="header-logo" href="/teacher">Lead</a>
+  <header style="background-color: white;;">
+    <img src="../images/pencil.png" alt="" width="30" height="24" class="d-inline-block align-top" style="margin-left: 2%;">
+    <a class="header-logo" href="/teacher" style="background-color: white;margin-left: 1%;">Lead</a>
   </header>
 
   <div class="container">
-    <h2>生徒情報</h2>
+    <h2 id="subsection">生徒情報</h2>
     <div class="contents_wrapper">
       <div class="contents">
         <ul>
@@ -22,7 +23,7 @@
       </div>
     </div>
 
-    <h2>お知らせ</h2>
+    <h2 id="subsection">お知らせ</h2>
     <div class="contents_wrapper">
       <div class="contents">
         今週は
@@ -46,7 +47,7 @@
 
     
     
-    <h2>学習スケジュール</h2>
+    <h2 id="subsection">学習スケジュール</h2>
     <div class="wrapper">
       <div class="gantt">
         <div class="gantt__row gantt__row--months">
@@ -131,7 +132,7 @@
       </div>
     </div>
     <a name="update"></a>
-    <h2 style="margin-top:30px">今週の進捗を更新する</h2>
+    <h2 style="margin-top:30px" id="subsection">今週の進捗を更新する</h2>
     <div class="contents_wrapper">
         <form action="/update_task/{{.St.Id}}" class="contents">
           <ul>
@@ -151,7 +152,7 @@
       </div>
     </div>
 
-    <h2>スケジュールを登録</h2>
+    <h2 id="subsection">スケジュールを登録</h2>
       <div class="contents_wrapper">
         <form action="/create_task/{{.St.Id}}" class="contents">
           <ul>
