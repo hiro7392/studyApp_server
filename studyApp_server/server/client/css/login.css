@@ -1,7 +1,7 @@
 body,
 html {
   font-family: "Roboto", sans-serif;
-  background-color: #cddade;
+  background-color: rgb(122, 197, 61);
   height: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -117,11 +117,12 @@ header {
 #loginform_{
   visibility:visible;
   padding:5%;
-  background-color: rgb(122, 197, 61);
+  background-color: #cddade;
   border-radius: 5%;
 }
 #hideform_{
   text-align: center;
   visibility:hidden;
-  margin-top:15%;
+  margin-top:10%;
 }
+

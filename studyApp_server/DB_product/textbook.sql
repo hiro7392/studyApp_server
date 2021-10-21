@@ -4,4 +4,4 @@ CREATE TABLE textbooks(
     subject_id INT UNSIGNED NOT NULL,
     page    INT UNSIGNED NOT NULL,
     PRIMARY KEY(id)
-)
+);

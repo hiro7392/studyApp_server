@@ -3,6 +3,10 @@ module github.com/sakana7392/Go_tutorial/tree/main/Go_impress_book/Chapter7/REST
 go 1.16
 
 require (
+	github.com/aws/aws-sdk-go v1.40.41 // indirect
+	github.com/aws/aws-sdk-go-v2 v1.9.0 // indirect
+	github.com/aws/aws-sdk-go-v2/config v1.8.1 // indirect
+	github.com/aws/aws-sdk-go-v2/feature/rds/auth v1.1.6 // indirect
 	github.com/gin-gonic/gin v1.7.4 // indirect
 	github.com/go-playground/validator/v10 v10.9.0 // indirect
 	github.com/go-sql-driver/mysql v1.6.0
