@@ -3,3 +3,5 @@
 
 GoとMySQLを使用してデータベースから取得したデータを
 Goのtemplateを用いてHTMLに埋め込んで返します。
+
+DBのテーブル例は server/data_detail.mdに記載してあります。
